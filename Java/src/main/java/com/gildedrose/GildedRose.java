@@ -16,25 +16,43 @@ class GildedRose {
         return item.name.equals(check);
     }
 
-    
-    public void updateQuality() {
+    private boolean checkNoSpecial(Item item) {
+    return !checkEqual(item, Aged) 
+            && !checkEqual(item, BackPass) 
+            && !checkEqual(item, Sulf) 
+            && item.quality > 0;
+    }
+
+    private boolean qualityLowThen50(Item item) {
+    return item.quality < 50;
+    }
+
+    private void increaseIfSellin(Item item) {
+    if (item.sellIn < 11 && qualityLowThen50(item)) {
+        ++item.quality;
+    }
+    if (item.sellIn < 6 && qualityLowThen50(item)) {
+        ++item.quality;
+    }
+    }
+
+    private void processQualityIncrease(Item item) {
+    if (qualityLowThen50(item)) {
+        ++item.quality;
+
+        if (checkEqual(item, BackPass)) {
+            increaseIfSellin(item);
+        }
+    }
+    }
+
+     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
-            if (!checkEqual(items[i], Aged) && !checkEqual(items[i], BackPass) && !checkEqual(items[i], Sulf) && items[i].quality > 0) {
+            if (checkNoSpecial(items[i])) {
                     --items[i].quality;
                 }
             } else {
-                if (items[i].quality < 50) {
-                    ++items[i].quality;
-                    
-                    if (checkEqual(items[i], BackPass)) {
-                        if (items[i].sellIn < 11 && items[i].quality < 50) {
-                            ++items[i].quality;
-                        }
-                        if (items[i].sellIn < 6 && items[i].quality < 50) {
-                            ++items[i].quality;
-                        }
-                    }
-                }
+               processQualityIncrease(items[i]);
             }
 
             if (!checkEqual(items[i], Sulf)) {
