@@ -19,27 +19,19 @@ class GildedRose {
     
     public void updateQuality() {
         for (int i = 0; i < items.length; i++) {
-            if (!checkEqual(items[i], Aged) && !checkEqual(items[i], BackPass)) {
-                if (items[i].quality > 0) {
-                   if (!checkEqual(items[i], Sulf)) {
-                        --items[i].quality;
-                    }
+            if (!checkEqual(items[i], Aged) && !checkEqual(items[i], BackPass) && !checkEqual(items[i], Sulf) && items[i].quality > 0) {
+                    --items[i].quality;
                 }
             } else {
                 if (items[i].quality < 50) {
                     ++items[i].quality;
-
+                    
                     if (checkEqual(items[i], BackPass)) {
-                        if (items[i].sellIn < 11) {
-                            if (items[i].quality < 50) {
-                                ++items[i].quality;
-                            }
+                        if (items[i].sellIn < 11 && items[i].quality < 50) {
+                            ++items[i].quality;
                         }
-
-                        if (items[i].sellIn < 6) {
-                            if (items[i].quality < 50) {
-                                ++items[i].quality;
-                            }
+                        if (items[i].sellIn < 6 && items[i].quality < 50) {
+                            ++items[i].quality;
                         }
                     }
                 }
@@ -51,12 +43,8 @@ class GildedRose {
 
             if (items[i].sellIn < 0) {
                 if (!checkEqual(items[i], Aged)) {
-                    if (!(checkEqual(items[i], BackPass)) {
-                        if (items[i].quality > 0) {
-                            if (!checkEqual(items[i], Sulf)) {
-                                --items[i].quality;
-                            }
-                        }
+                    if (!(checkEqual(items[i], BackPass)) && items[i].quality > 0 && !checkEqual(items[i], Sulf)) {
+                         --items[i].quality;
                     } else {
                         items[i].quality = 0;
                     }
@@ -68,4 +56,4 @@ class GildedRose {
             }
         }
     }
-}
+
