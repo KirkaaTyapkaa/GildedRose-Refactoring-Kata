@@ -50,8 +50,7 @@ class GildedRose {
         for (int i = 0; i < items.length; i++) {
             if (checkNoSpecial(items[i])) {
                     --items[i].quality;
-                }
-            } else {
+                } else {
                processQualityIncrease(items[i]);
             }
 
@@ -59,19 +58,23 @@ class GildedRose {
                 --items[i].sellIn;
             }
 
-            if (items[i].sellIn < 0) {
-                if (!checkEqual(items[i], Aged)) {
-                    if (!(checkEqual(items[i], BackPass)) && items[i].quality > 0 && !checkEqual(items[i], Sulf)) {
-                         --items[i].quality;
-                    } else {
-                        items[i].quality = 0;
-                    }
-                } else {
-                    if (items[i].quality < 50) {
-                        ++items[i].quality;
-                    }
-                }
+            if (items[i].sellIn >= 0) {
+                continue;
             }
+            if (checkEqual(items[i], Aged)) {
+                if (qualityLowThen50(item)) {
+                    ++items[i].quality;
+                    }
+                return;
+            }
+
+                
+            if (!checkEqual(items[i], BackPass) && !checkEqual(items[i], Sulf) && items[i].quality > 0) {
+                --items[i].quality;
+                return;
+            } 
+            items[i].quality = 0;
+                    
         }
     }
-
+}
