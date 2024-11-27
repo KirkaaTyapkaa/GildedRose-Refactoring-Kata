@@ -15,6 +15,7 @@ class GildedRose {
         return item.name.equals(check);
     }
 
+    
     private boolean checkNoSpecial(Item item) {
         return !checkEqual(item, Aged) 
                 && !checkEqual(item, BackPass) 
@@ -34,14 +35,14 @@ class GildedRose {
             ++item.quality;
         }
     }
-
+    
     private void processQualityIncrease(Item item) {
-        if (qualityLowThen50(item)) {
-            ++item.quality;
-
-            if (checkEqual(item, BackPass)) {
-                increaseIfSellin(item);
-            }
+        if (!qualityLowThen50(item)) {
+            return;
+        }
+        ++item.quality;
+        if (checkEqual(item, BackPass)) {
+            increaseIfSellin(item);
         }
     }
 
